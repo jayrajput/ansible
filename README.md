@@ -1,2 +1,2 @@
 # ansible
-Ansible playbook to manage my home machine.
+Ansible playbook to manage my home computer
