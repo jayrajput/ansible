@@ -1,13 +1,11 @@
 #!/usr/bin/env ansible-playbook
 ---
-- name: Install generic RPMs
+- name: Install node RPMs
   hosts: localhost
   gather_facts: no
   tasks:
     - name: Install RPMs
       yum: name={{ item }} state=present
       with_items:
-        - tmux
-        - vim
-        - dos2unix
-        - wget
+        - nodejs
+        - npm
