@@ -1,0 +1,13 @@
+---
+- name: Install Java.
+  hosts: localhost
+  gather_facts: no
+  vars:
+    java_jdk: java-1.6.0-openjdk
+    java_jdk_devel: java-1.6.0-openjdk-devel
+  tasks:
+    - name: Install java RPMs
+      yum: name={{ item }} state=present
+      with_items:
+        - java_jdk
+        - java_jdk_devel

@@ -1,0 +1,21 @@
+#!/usr/bin/env ansible-playbook
+#
+# See http://groovy-lang.org/install.html#_gvm_the_groovy_environment_manager for groovy installation
+# Attempt to install groovy using ansible failed. But worked fine with the manual install.
+---
+- name: Java groovy installation
+  hosts: localhost
+  tasks:
+    - name: check if gvm is installed
+      shell: test -d ~/.gvm && echo 'yes' || echo 'no'
+      register: is_gvm_installed
+
+    - name: download gvm
+      when: is_gvm_installed.stdout == 'no'
+      get_url: url=http://get.gvmtool.net dest=/usr/share/gvm_install.sh
+    
+    - name: install gvm
+      command: bash /usr/share/gvm_install.sh
+
+    - name: install grovvy
+      shell: source $HOME/.gvm/bin/gvm-init.sh && gvm install groovy

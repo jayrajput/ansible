@@ -3,11 +3,8 @@
   hosts: localhost
   gather_facts: no
   vars:
-    jenkins_jdk: java-1.6.0-openjdk
     jenkins_key: gpg-pubkey-d50582e6-4a3feef6
   tasks:
-    - name: Ensure java is present
-      yum: name={{ jenkins_jdk }} state=present
     - name: Ensure jenkins yum repo is present
       get_url: url=http://pkg.jenkins-ci.org/redhat/jenkins.repo dest=/etc/yum.repos.d/jenkins.repo mode=0644
     - name: Check for Jenkins GPG key in rpmdb
