@@ -1,0 +1,27 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: VIM Pluging as pathogen git clones
+  hosts: localhost
+  vars:
+    vim_base: ~/.vim
+    vim_autoload: "{{ vim_base }}/autoload"
+    vim_bundle:   "{{ vim_base }}/bundle"
+  gather_facts: no
+  tasks:
+    - name: create needed directories
+      file: path={{ item }} state=directory
+      with_items:
+        - "{{ vim_bundle }}"
+        - "{{ vim_autoload }}"
+
+    - name: pathogen
+      get_url: url=https://tpo.pe/pathogen.vim dest={{ vim_autoload }}/pathogen.vim
+
+    - name: install plugins
+      git: repo={{ item.repo }} clone=yes dest="{{ vim_bundle }}/{{ item.dest }}"
+      with_items:
+        - { repo: 'https://github.com/tpope/vim-sensible.git'   , dest: sensible }
+        - { repo: 'https://github.com/tpope/vim-surround.git'   , dest: surround }
+        - { repo: 'https://github.com/tpope/vim-commentary.git' , dest: commentary }
+        - { repo: 'https://github.com/tsaleh/vim-align.git'     , dest: align }
+
