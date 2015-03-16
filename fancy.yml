@@ -8,3 +8,4 @@
       yum: name={{ item }} state=present
       with_items:
         - tree
+        - elinks
